@@ -37,6 +37,7 @@ DJANGO_APP = [
     "django.contrib.staticfiles",
 ]
 PACKAGE_APP = [
+    "rest_framework",
     "pictures",
 ]
 
