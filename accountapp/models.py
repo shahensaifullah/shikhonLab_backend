@@ -18,9 +18,11 @@ class User(TimeStampedSoftDeleteModel, AbstractBaseUser, PermissionsMixin):
         aspect_ratios=[None, "1/1", "3/2", "16/9"],
         width_field="picture_width",
         height_field="picture_height",
+        null=True,
+        blank=True,
     )
-    picture_width = models.PositiveIntegerField(editable=False)
-    picture_height = models.PositiveIntegerField(editable=False)
+    picture_width = models.PositiveIntegerField(editable=False, null=True, blank=True)
+    picture_height = models.PositiveIntegerField(editable=False, null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -33,9 +35,9 @@ class User(TimeStampedSoftDeleteModel, AbstractBaseUser, PermissionsMixin):
     # 2) We also want soft-delete filtering by default
     #
     # So we attach BOTH:
-    base_objects = UserManager()      # for creates (Django uses this)
-    objects = SoftDeleteManager()     # alive only
-    all_objects = AllObjectsManager() # includes deleted
+    base_objects = UserManager()  # for creates (Django uses this)
+    objects = SoftDeleteManager()  # alive only
+    all_objects = AllObjectsManager()  # includes deleted
 
     def __str__(self):
         return self.full_name or self.phone
@@ -63,22 +65,30 @@ class UserRole(TimeStampedSoftDeleteModel):
 
 
 class StudentProfile(TimeStampedSoftDeleteModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="student_profile")
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="student_profile"
+    )
 
-    current_grade_label = models.CharField(max_length=40, blank=True)  # temp; later connect to Grade table
+    current_grade_label = models.CharField(
+        max_length=40, blank=True
+    )  # temp; later connect to Grade table
     date_of_birth = models.DateField(blank=True, null=True)
     school_name = models.CharField(max_length=160, blank=True)
 
 
 class ParentProfile(TimeStampedSoftDeleteModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="parent_profile")
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="parent_profile"
+    )
 
     occupation = models.CharField(max_length=120, blank=True)
     address_text = models.CharField(max_length=255, blank=True)
 
 
 class TeacherProfile(TimeStampedSoftDeleteModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="teacher_profile")
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="teacher_profile"
+    )
 
     bio = models.TextField(blank=True)
     expertise = models.CharField(max_length=255, blank=True)

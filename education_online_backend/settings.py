@@ -44,7 +44,8 @@ PACKAGE_APP = [
 PROJECT_APP = [
     "accountapp.apps.AccountappConfig",
     "relationshipapp.apps.RelationshipsappConfig",
-    "contentapp.apps.ContentappConfig"
+    "contentapp.apps.ContentappConfig",
+    "dashboard_accessapp.apps.DashboardAccessappConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APP + PACKAGE_APP + PROJECT_APP

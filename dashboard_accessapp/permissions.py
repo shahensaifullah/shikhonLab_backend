@@ -1,4 +1,9 @@
 # dashboard_access/permissions.py
+from rest_framework.permissions import BasePermission
+
+from dashboard_accessapp.enums import PermissionLevel
+from dashboard_accessapp.services.permissions import has_admin_perm
+
 
 class DashboardPermission(BasePermission):
     """
